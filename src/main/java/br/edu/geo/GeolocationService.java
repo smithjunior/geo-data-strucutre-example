@@ -30,22 +30,30 @@ public class GeolocationService implements IGeolocationService{
 
         this.tableHashPersonPoints.put(cpf, point) ;
 
-
     }
 
     @Override
     public void updatePerson(String cpf, int latitude, int longitude) {
         assert cpf != null;
-
-        if (null == this.tableHashPersonPoints.get(cpf)) {
+        Point point = this.tableHashPersonPoints.get(cpf);
+        if (null == point) {
             throw new RuntimeException("CPF not found in hash table, please insert before invoke this method!");
         }
-        this.tableHashPersonPoints.remove(cpf);
-        this.tableHashPersonPoints.put(cpf, new Point(latitude, longitude) );
+        Point newPoint = new Point(latitude, longitude);
+
+        HashSet<String> hashSet = this.treeMapRangePoints.get(point.calculateRange());
+        hashSet.remove(cpf+point.toString());
+
+        hashSet.add(cpf+newPoint.toString());
+
+        this.tableHashPersonPoints.put(cpf, newPoint );
     }
 
     @Override
     public void removePerson(String cpf) {
+        Point point = this.tableHashPersonPoints.get(cpf);
+        HashSet<String> hashSet = this.treeMapRangePoints.get(point.calculateRange());
+        hashSet.remove(cpf+point.toString());
         this.tableHashPersonPoints.remove(cpf);
     }
 

@@ -13,7 +13,7 @@ public class App
 
         geolocationService.updatePerson("08487449425",15,73);
 
-        geolocationService.removePerson("12345678910");
+        geolocationService.removePerson("1111111111");
 
         String formatedRange = geolocationService.getFormatedRange("08487449425");
         System.out.println("point: "+formatedRange);
