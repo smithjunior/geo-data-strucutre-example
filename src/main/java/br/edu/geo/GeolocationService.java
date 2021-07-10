@@ -65,7 +65,7 @@ public class GeolocationService implements IGeolocationService{
         if (null == point) {
             throw new RuntimeException("CPF not found in hash table!");
         }
-        // System.out.println(point.calculateRange().toString());
+
         return point.getLatitude() + "º " + point.getLongitude() + "º";
     }
 
